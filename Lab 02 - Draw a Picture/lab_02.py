@@ -34,7 +34,6 @@ arcade.draw_rectangle_filled(400, 500, 40, 80, arcade.color.BLACK)
 
 # Draw Dark Moon
 arcade.draw_circle_filled(775, 550, 150, arcade.color.BLACK)
-
 # Draw Foreground
 arcade.draw_lrtb_rectangle_filled(0, 800, 140, 0, arcade.color.DARK_OLIVE_GREEN)
 
