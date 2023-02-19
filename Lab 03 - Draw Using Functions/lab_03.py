@@ -34,7 +34,7 @@ def on_draw(delta_time):
     draw_rocket(-200, on_draw.rocket1_y)
 
     # Add to the y value, making rocket move up
-    on_draw.rocket1_y += 10
+    on_draw.rocket1_y += 11
 
 
 # Starting point for rocket
