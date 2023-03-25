@@ -12,6 +12,7 @@ def draw_rocket(x, y):
     arcade.draw_triangle_filled(150 + x, 100 + y, 350 + x, 100 + y, 350 + x, 300 + y, arcade.color.BONE)
     arcade.draw_triangle_filled(450 + x, 100 + y, 650 + x, 100 + y, 450 + x, 300 + y, arcade.color.BONE)
     arcade.draw_rectangle_filled(400 + x, 195 + y, 5, 190, arcade.color.BONE)
+    arcade.draw_triangle_filled(450 + x, 600 + y, 350 + x, 600 + y, 400 + x, 700 + y, arcade.color.BLACK_OLIVE)
 
     # Draw window in rocket
     arcade.draw_rectangle_filled(400 + x, 500 + y, 60, 100, arcade.color.BONE)
@@ -27,6 +28,24 @@ class Rocket:
     def draw(self):
         draw_rocket(self.position_x,
                     self.position_y,)
+
+        def update(self):
+            # Move the ball
+            self.position_y += self.change_y
+            self.position_x += self.change_x
+
+            # See if the ball hit the edge of the screen. If so, change direction
+            if self.position_x < self.width:
+                self.position_x = self.width
+
+            if self.position_x > SCREEN_WIDTH - self.width:
+                self.position_x = SCREEN_WIDTH - self.width
+
+            if self.position_y < self.height:
+                self.position_y = self.height
+
+            if self.position_y > SCREEN_HEIGHT - self.height:
+                self.position_y = SCREEN_HEIGHT - self.height
 class MyGame(arcade.Window):
 
     def __init__(self, width, height, title):
@@ -39,8 +58,7 @@ class MyGame(arcade.Window):
         arcade.set_background_color(arcade.color.ASH_GREY)
 
         # Create rocket
-        self.rocket = Rocket(50, 50, 15, 15, arcade.color.WHITE)
-
+        self.rocket = Rocket(-50, -50, 15, 15, arcade.color.WHITE)
     def on_draw(self):
         """ Called whenever we need to draw the window. """
         arcade.start_render()
