@@ -20,6 +20,7 @@ def draw_rocket(x, y):
     arcade.draw_triangle_filled(150 + x, 100 + y, 350 + x, 100 + y, 350 + x, 300 + y, arcade.color.BONE)
     arcade.draw_triangle_filled(450 + x, 100 + y, 650 + x, 100 + y, 450 + x, 300 + y, arcade.color.BONE)
     arcade.draw_rectangle_filled(400 + x, 195 + y, 5, 190, arcade.color.BONE)
+    arcade.draw_triangle_filled(450 + x, 600 + y, 350 + x, 600 + y, 400 + x, 700 + y, arcade.color.BLACK_OLIVE)
 
     # Draw window in rocket
     arcade.draw_rectangle_filled(400 + x, 500 + y, 60, 100, arcade.color.BONE)

@@ -108,7 +108,7 @@ class MyGame(arcade.Window):
             self.rocket.change_y = 0
 
 def main():
-    window = MyGame(1000, 900, "Moving")
+    window = MyGame(1000, 900, "Moving with arrows")
     arcade.run()
 
 
