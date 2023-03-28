@@ -2,7 +2,7 @@ import arcade
 
 SCREEN_WIDTH = 1000
 SCREEN_HEIGHT = 900
-MOVEMENT_SPEED = 6
+MOVEMENT_SPEED = 5
 
 def draw_background():
     """Draw the background"""
