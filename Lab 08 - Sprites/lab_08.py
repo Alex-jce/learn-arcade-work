@@ -3,10 +3,13 @@
 import random
 import arcade
 
+
 # --- Constants ---
 SPRITE_SCALING_PLAYER = 0.5
 SPRITE_SCALING_CREW = .25
+SPRITE_SCALING_REEF = 0.5
 CREW_COUNT = 50
+REEF_COUNT = 50
 
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
@@ -21,9 +24,26 @@ ACCELERATION_RATE = 3.0
 # How fast to slow down after we let off the key
 FRICTION = 0.02
 
+class Crew(arcade.Sprite):
+    def reset_pos(self):
+        self.center_y = random.randrange(SCREEN_HEIGHT + 20,
+                                      SCREEN_HEIGHT + 100)
+        self.center_x = random.randrange(SCREEN_WIDTH)
+
+class Reef(arcade.Sprite):
+    def reset_pos(self):
+
+        self.center_y = random.randrange(SCREEN_HEIGHT + 20,
+                                             SCREEN_HEIGHT + 100)
+        self.center_x = random.randrange(SCREEN_WIDTH)
+
+        def update(self):
+            self.center_y -= 1
+
+            if self.top < 0:
+                self.reset_pos()
 
 class Player(arcade.Sprite):
-
     def update(self):
         self.center_x += self.change_x
         self.center_y += self.change_y
@@ -43,7 +63,6 @@ class Player(arcade.Sprite):
             self.top = SCREEN_HEIGHT - 1
             self.change_y = 0
 
-
 class MyGame(arcade.Window):
     """ Our custom Window Class"""
 
@@ -55,6 +74,7 @@ class MyGame(arcade.Window):
         # Variables that will hold sprite lists
         self.player_list = None
         self.crew_list = None
+        self.reef_list = None
 
         # Set up the player info
         self.player_sprite = None
@@ -77,6 +97,7 @@ class MyGame(arcade.Window):
         # Sprite lists
         self.player_list = arcade.SpriteList()
         self.crew_list = arcade.SpriteList()
+        self.reef_list = arcade.SpriteList()
 
         # Score
         self.score = 0
@@ -94,8 +115,7 @@ class MyGame(arcade.Window):
 
             # Create the Person instance
             # Crew-mate image from kenney.nl
-            crew = arcade.Sprite(":resources:images/animated_characters/male_adventurer/maleAdventurer_idle.png",
-                                 SPRITE_SCALING_CREW)
+            crew = Crew(":resources:images/animated_characters/male_adventurer/maleAdventurer_idle.png", SPRITE_SCALING_CREW)
 
             # Position the crew
             crew.center_x = random.randrange(SCREEN_WIDTH)
@@ -104,10 +124,23 @@ class MyGame(arcade.Window):
             # Add the crew to the lists
             self.crew_list.append(crew)
 
+        for i in range(REEF_COUNT):
+
+            # Create obstacles
+            reef = Reef("stoneCaveSpikeBottom.png", SPRITE_SCALING_REEF)
+
+            # Position the obstacles
+            reef.center_x = random.randrange(SCREEN_WIDTH)
+            reef.center_y = random.randrange(SCREEN_HEIGHT)
+
+            # Add reef to the lists
+            self.reef_list.append(reef)
+
     def on_draw(self):
         """ Draw everything """
         self.clear()
         self.crew_list.draw()
+        self.reef_list.draw()
         self.player_list.draw()
 
         # Put the text on the screen.
@@ -174,12 +207,17 @@ class MyGame(arcade.Window):
         # Generate a list of all sprites that collided with the player.
         crews_hit_list = arcade.check_for_collision_with_list(self.player_sprite,
                                                               self.crew_list)
+        reef_hit_list = arcade.check_for_collision_with_list(self.player_sprite,
+                                                             self.reef_list)
 
         # Loop through each colliding sprite, remove it, and add to the score.
         for crew in crews_hit_list:
             crew.remove_from_sprite_lists()
             self.score += 1
 
+        for reef in reef_hit_list:
+            reef.remove_from_sprite_lists()
+            self.score += -1
 
 def main():
     """ Main function """
