@@ -60,7 +60,7 @@ class Player(arcade.Sprite):
             self.bottom = 0
             self.change_y = 0
         elif self.top > SCREEN_HEIGHT - 1:
-            self.top = SCREEN_HEIGHT - 1
+            self.top = SCREEN_HEIGHT - 2
             self.change_y = 0
 
 class MyGame(arcade.Window):
@@ -153,15 +153,6 @@ class MyGame(arcade.Window):
 
     def on_key_press(self, key, modifiers):
         """ Called whenever the user presses a key. """
-        if key == arcade.key.A:
-            self.player_sprite.change_x = -ACCELERATION_RATE
-        elif key == arcade.key.D:
-            self.player_sprite.change_x = ACCELERATION_RATE
-        elif key == arcade.key.W:
-            self.player_sprite.change_y = ACCELERATION_RATE
-        elif key == arcade.key.S:
-            self.player_sprite.change_y = -ACCELERATION_RATE
-
     def on_key_release(self, key, modifiers):
         """ Called whenever a user releases a key. """
         if key == arcade.key.A or key == arcade.key.D:
@@ -170,40 +161,6 @@ class MyGame(arcade.Window):
             self.player_sprite.change_y = 0
     def on_update(self, delta_time):
         """ Movement and game logic """
-        # Add some friction
-        if self.player_sprite.change_x > FRICTION:
-            self.player_sprite.change_x -= FRICTION
-        elif self.player_sprite.change_x < -FRICTION:
-            self.player_sprite.change_x += FRICTION
-        else:
-            self.player_sprite.change_x = 0
-
-        if self.player_sprite.change_y > FRICTION:
-            self.player_sprite.change_y -= FRICTION
-        elif self.player_sprite.change_y < -FRICTION:
-            self.player_sprite.change_y += FRICTION
-        else:
-            self.player_sprite.change_y = 0
-
-        # Apply acceleration based on the keys pressed
-        if self.W_pressed and not self.S_pressed:
-            self.player_sprite.change_y += ACCELERATION_RATE
-        elif self.S_pressed and not self.W_pressed:
-            self.player_sprite.change_y += -ACCELERATION_RATE
-        if self.A_pressed and not self.D_pressed:
-            self.player_sprite.change_x += -ACCELERATION_RATE
-        elif self.D_pressed and not self.A_pressed:
-            self.player_sprite.change_x += ACCELERATION_RATE
-
-        if self.player_sprite.change_x > MAX_SPEED:
-            self.player_sprite.change_x = MAX_SPEED
-        elif self.player_sprite.change_x < -MAX_SPEED:
-            self.player_sprite.change_x = -MAX_SPEED
-        if self.player_sprite.change_y > MAX_SPEED:
-            self.player_sprite.change_y = MAX_SPEED
-        elif self.player_sprite.change_y < -MAX_SPEED:
-            self.player_sprite.change_y = -MAX_SPEED
-
         # Generate a list of all sprites that collided with the player.
         crews_hit_list = arcade.check_for_collision_with_list(self.player_sprite,
                                                               self.crew_list)

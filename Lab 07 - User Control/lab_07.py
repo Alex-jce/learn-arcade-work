@@ -52,7 +52,7 @@ class Rocket:
                     self.position_y,)
 
     def update(self):
-        # Move the ball
+        # Move the rocket
         self.position_y += self.change_y
         self.position_x += self.change_x
 
