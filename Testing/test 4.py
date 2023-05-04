@@ -149,7 +149,7 @@ class MyGame(arcade.Window):
 
         # Game state. You failed
         if self.game_state == GAME_OVER:
-            arcade.draw_text("YOU FAILED", 150, 300, arcade.color.ROSE, 70)
+            arcade.draw_text("YOU FAILED", 150, 300, arcade.color.BLACK_OLIVE, 70)
             self.set_mouse_visible(True)
 
     # Using the mouse to fire bullets at the enemies.

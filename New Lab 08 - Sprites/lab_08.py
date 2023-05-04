@@ -37,11 +37,11 @@ class Reef(arcade.Sprite):
                                              SCREEN_HEIGHT + 100)
         self.center_x = random.randrange(SCREEN_WIDTH)
 
-        def update(self):
-            self.center_y -= 1
+    def update(self):
+        self.center_y -= 1
 
-            if self.top < 0:
-                self.reset_pos()
+        if self.top < 0:
+            self.reset_pos()
 
 class Player(arcade.Sprite):
     def update(self):
@@ -150,6 +150,8 @@ class MyGame(arcade.Window):
 
     def update(self, delta_time):
         self.player_sprite.update()
+        self.crew_list.update()
+        self.reef_list.update()
 
     def on_key_press(self, key, modifiers):
         """ Called whenever the user presses a key. """
